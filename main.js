@@ -13,9 +13,10 @@ const camera = new THREE.PerspectiveCamera( FOV, AspectRatio, NearLimit, FarLimi
 
 const renderer = new THREE.WebGLRenderer();
 renderer.setSize( window.innerWidth, window.innerHeight );
+renderer.setClearColor(0xFFFFFF, 0)
 document.body.appendChild( renderer.domElement );
 
-const texture = new THREE.TextureLoader().load( "public/texture/noise.png" );
+const texture = new THREE.TextureLoader().load( "public/texture/pencil_noise.png" );
 texture.wrapS = THREE.RepeatWrapping;
 texture.wrapT = THREE.RepeatWrapping;
 texture.repeat.set( 1, 1 );
@@ -27,36 +28,66 @@ texture.repeat.set( 1, 1 );
 
 // ------------------------------------------------------------------------------
 
-const materialTwo = new LineMaterial( { color: 0xFFFFFF, linewidth: 5 } );
+const materialTwo = new LineMaterial( { color: 0x000000, linewidth: 5 } );
+
+// P sure that you cant make a euler path out of a cube so i jsut made two paths :P
+// Make cube !!
+
+const pointsOne = [];
+pointsOne.push( new THREE.Vector3( -1, -1, -1 ) );
+pointsOne.push( new THREE.Vector3( -1, -1, 1 ) );
+pointsOne.push( new THREE.Vector3( -1, 1, 1 ) );
+pointsOne.push( new THREE.Vector3( -1, 1, -1 ) );
+pointsOne.push( new THREE.Vector3( -1, -1, -1 ) );
+pointsOne.push( new THREE.Vector3( 1, -1, -1 ) );
+pointsOne.push( new THREE.Vector3( 1, 1, -1 ) );
+pointsOne.push( new THREE.Vector3( -1, 1, -1 ) );
+
+const geometryOne = new LineGeometry().setFromPoints( pointsOne );
 
 const pointsTwo = [];
-pointsTwo.push( new THREE.Vector3( -1, 0, 0 ) );
-pointsTwo.push( new THREE.Vector3( -1, -2, 0 ) );
-pointsTwo.push( new THREE.Vector3( 0, 0, 0 ) );
+pointsTwo.push( new THREE.Vector3( 1, 1, 1 ) );
+pointsTwo.push( new THREE.Vector3( 1, 1, -1 ) );
+pointsTwo.push( new THREE.Vector3( 1, -1, -1 ) );
+pointsTwo.push( new THREE.Vector3( 1, -1, 1 ) );
+pointsTwo.push( new THREE.Vector3( 1, 1, 1 ) );
+pointsTwo.push( new THREE.Vector3( -1, 1, 1 ) );
+pointsTwo.push( new THREE.Vector3( -1, -1, 1 ) );
+pointsTwo.push( new THREE.Vector3( 1, -1, 1 ) );
 
 const geometryTwo = new LineGeometry().setFromPoints( pointsTwo );
 
+const lineOne = new Line2( geometryOne, materialTwo ) ;
 const lineTwo = new Line2( geometryTwo, materialTwo ) ;
+
+scene.add(lineOne);
+scene.add(lineTwo);
 
 // ------------------------------------------------------------------------------
 
-const material = new THREE.LineBasicMaterial( { color: 0x0000ff } );
+// const material = new THREE.LineBasicMaterial( { color: 0x0000ff } );
 
-const points = [];
-points.push( new THREE.Vector3( 1, 0, 0 ) );
-points.push( new THREE.Vector3( 1, 2, 0 ) );
-points.push( new THREE.Vector3( 0, 0, 0 ) );
+// const points = [];
+// points.push( new THREE.Vector3( 1, 0, 0 ) );
+// points.push( new THREE.Vector3( 1, 2, 0 ) );
+// points.push( new THREE.Vector3( 0, 0, 0 ) );
 
-const geometry = new THREE.BufferGeometry().setFromPoints( points );
+// const geometry = new THREE.BufferGeometry().setFromPoints( points );
 
-const line = new THREE.Line( geometry, material );
+// const line = new THREE.Line( geometry, material );
+
+// scene.add(line);
 
 camera.position.z = 5;
 
-scene.add(line);
-scene.add(lineTwo);
-
 function animate() {
   renderer.render( scene, camera );
+
+  lineOne.rotateX(0.02);
+  lineOne.rotateY(0.02);
+  lineOne.rotateZ(0.02);
+  lineTwo.rotateX(0.02);
+  lineTwo.rotateY(0.02);
+  lineTwo.rotateZ(0.02);
 }
 renderer.setAnimationLoop( animate );
