@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "@lume/three-meshline": "^4.0.5",
     "three": "^0.180.0"
   },
   "devDependencies": {

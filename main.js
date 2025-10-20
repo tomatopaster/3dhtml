@@ -3,6 +3,7 @@ import * as THREE from 'three';
 import { Line2 } from 'three/examples/jsm/lines/Line2.js';
 import { LineMaterial } from 'three/examples/jsm/lines/LineMaterial.js';
 import { LineGeometry } from 'three/examples/jsm/lines/LineGeometry.js';
+import {MeshLine, MeshLineGeometry, MeshLineMaterial} from '@lume/three-meshline';
 
 const scene = new THREE.Scene();
 const FOV = 75;
@@ -28,7 +29,7 @@ texture.repeat.set( 1, 1 );
 
 // ------------------------------------------------------------------------------
 
-const materialTwo = new LineMaterial( { color: 0x000000, linewidth: 5 } );
+const materialTwo = new MeshLineMaterial( { color: 0x000000, linewidth: 5 } );
 
 // P sure that you cant make a euler path out of a cube so i jsut made two paths :P
 // Make cube !!
@@ -43,7 +44,7 @@ pointsOne.push( new THREE.Vector3( 1, -1, -1 ) );
 pointsOne.push( new THREE.Vector3( 1, 1, -1 ) );
 pointsOne.push( new THREE.Vector3( -1, 1, -1 ) );
 
-const geometryOne = new LineGeometry().setFromPoints( pointsOne );
+const geometryOne = new MeshLineGeometry().setFromPoints( pointsOne );
 
 const pointsTwo = [];
 pointsTwo.push( new THREE.Vector3( 1, 1, 1 ) );
@@ -55,10 +56,10 @@ pointsTwo.push( new THREE.Vector3( -1, 1, 1 ) );
 pointsTwo.push( new THREE.Vector3( -1, -1, 1 ) );
 pointsTwo.push( new THREE.Vector3( 1, -1, 1 ) );
 
-const geometryTwo = new LineGeometry().setFromPoints( pointsTwo );
+const geometryTwo = new MeshLineGeometry().setFromPoints( pointsTwo );
 
-const lineOne = new Line2( geometryOne, materialTwo ) ;
-const lineTwo = new Line2( geometryTwo, materialTwo ) ;
+const lineOne = new MeshLine( geometryOne, materialTwo ) ;
+const lineTwo = new MeshLine( geometryTwo, materialTwo ) ;
 
 scene.add(lineOne);
 scene.add(lineTwo);
